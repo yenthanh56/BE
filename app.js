@@ -76,7 +76,7 @@ app.use(express.json());
 app.use(cors({ origin: true }));
 app.use(cookieParser());
 
-// app.use("/v1/userauth", userRouter);
+app.use("/v1/userauth", userRouter);
 app.use("/v1/dealhot", dealRouter);
 app.use("/v1/auth", authRouter);
 
