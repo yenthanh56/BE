@@ -48,13 +48,13 @@ const OrderProductScheme = new mongoose.Schema(
 		address: {
 			type: String,
 			require: true,
-			minlength: 20,
+			minlength: 10,
 			maxlength: 100,
 		},
 		city: {
 			type: String,
 			require: true,
-			minlength: 20,
+			minlength: 10,
 			maxlength: 100,
 		},
 		district: {
@@ -67,8 +67,8 @@ const OrderProductScheme = new mongoose.Schema(
 		},
 		phone: {
 			type: Number,
-			minlength: 11,
-			maxlength: 11,
+			minlength: 10,
+			maxlength: 10,
 			require: true,
 		},
 
