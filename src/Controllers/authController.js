@@ -7,7 +7,15 @@ const authController = {
 			const salt = await bcrypt.genSalt(10);
 			const { username, email, password, cf_password } = req.body;
 			const hasPass = await bcrypt.hash(password, salt);
+			if (!(username && email && password && cf_password)) {
+				res.status(400).send("All input is required");
+			}
 
+			const oldUser = await UserOrdered.findOne({ email });
+
+			if (oldUser) {
+				return res.status(409).send("User Already Exist. Please Login");
+			}
 			// create
 			const newUser = await new UserOrdered({
 				username,
@@ -46,8 +54,9 @@ const authController = {
 					process.env.JWT_TOKEN_NAME,
 					{ expiresIn: "30d" }
 				);
-				const { password, ...other } = user._doc;
-				return res.status(200).json({ accessToken, ...other });
+				// const { password, ...other } = user._doc;
+				user.accessToken = accessToken;
+				return res.status(200).json(user);
 			}
 		} catch (error) {
 			return res.status(500).json(error);
