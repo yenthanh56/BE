@@ -61,9 +61,18 @@ app.use(function (req, res, next) {
 app.use(passport.initialize());
 app.use(passport.session()); //
 
-mongoose.connect(process.env.MONGOOSEDB, () => {
-	console.log("Connect Mongoose");
-});
+mongoose.connect(
+	process.env.MONGOOSEDB,
+	{
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+		useCreateIndex: true,
+		useFindAndModify: false,
+	},
+	() => {
+		console.log("Connect Mongoose");
+	}
+);
 
 app.use(express.json());
 // app.use(
