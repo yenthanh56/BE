@@ -63,12 +63,7 @@ app.use(passport.session()); //
 
 mongoose.connect(
 	process.env.MONGOOSEDB,
-	{
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-		useCreateIndex: true,
-		useFindAndModify: false,
-	},
+
 	() => {
 		console.log("Connect Mongoose");
 	}
