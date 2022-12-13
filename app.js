@@ -61,18 +61,13 @@ app.use(function (req, res, next) {
 app.use(passport.initialize());
 app.use(passport.session()); //
 
-const connect = async () => {
-	try {
-		await mongoose.connect(process.env.MONGOOSEDB);
-		console.log("Connected to MongoDB");
-	} catch (error) {
-		throw error;
-	}
-};
+mongoose.connect(
+	process.env.MONGOOSEDB,
 
-mongoose.connection.on("disconnected", () => {
-	console.log("mongoDB disconnected");
-});
+	() => {
+		console.log("Connect Mongoose");
+	}
+);
 
 app.use(express.json());
 // app.use(
@@ -105,6 +100,5 @@ app.use("/v1/fashionnewstart", fashionNewStarRoute);
 const PORT = process.env.PORT || "3000";
 
 app.listen(PORT, () => {
-	connect();
 	console.log(`Example app listening on ${PORT}`);
 });
