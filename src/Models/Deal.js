@@ -4,47 +4,46 @@ const DealHotScheme = new moogose.Schema(
 	{
 		title: {
 			type: String,
-			require: true,
+			required: true,
 		},
 		image: {
-			type: String,
-			require: true,
+			type: [String],
 		},
 		description: {
 			type: String,
-			require: true,
+			required: true,
 		},
 		price: {
 			type: Number,
-			require: true,
+			required: true,
 		},
 		priceOld: {
 			type: Number,
-			require: true,
+			required: true,
 		},
 		star: {
 			type: Number,
-			require: true,
+			required: true,
 		},
 		percent: {
 			type: String,
-			require: true,
+			required: true,
 		},
 		dealhot: {
 			type: String,
-			require: true,
+			required: true,
 		},
 		titleSell: {
 			type: String,
-			require: true,
+			required: true,
 		},
 		sell: {
 			type: Number,
-			require: true,
+			required: true,
 		},
 		slug: {
 			type: String,
-			require: true,
+			required: true,
 		},
 	},
 	{ timestamps: true }

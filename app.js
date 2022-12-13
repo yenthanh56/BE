@@ -61,13 +61,18 @@ app.use(function (req, res, next) {
 app.use(passport.initialize());
 app.use(passport.session()); //
 
-mongoose.connect(
-	process.env.MONGOOSEDB,
-
-	() => {
-		console.log("Connect Mongoose");
+const connect = async () => {
+	try {
+		await mongoose.connect(process.env.MONGOOSEDB);
+		console.log("Connected to MongoDB");
+	} catch (error) {
+		throw error;
 	}
-);
+};
+
+mongoose.connection.on("disconnected", () => {
+	console.log("mongoDB disconnected");
+});
 
 app.use(express.json());
 // app.use(
@@ -77,6 +82,7 @@ app.use(express.json());
 // 		credentials: true,
 // 	})
 // );
+
 app.use(cors({ origin: true }));
 app.use(cookieParser());
 
@@ -99,5 +105,6 @@ app.use("/v1/fashionnewstart", fashionNewStarRoute);
 const PORT = process.env.PORT || "3000";
 
 app.listen(PORT, () => {
+	connect();
 	console.log(`Example app listening on ${PORT}`);
 });
