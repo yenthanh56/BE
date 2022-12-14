@@ -4,20 +4,24 @@ const UserScheme = new mongoose.Schema(
 	{
 		username: {
 			type: String,
-			require: true,
+			required: true,
 			minlength: 6,
 			maxlength: 20,
 		},
 		email: {
 			type: String,
-			require: true,
+			required: true,
 			unique: true,
 			minlength: 20,
 			maxlength: 50,
 		},
 		password: {
 			type: String,
-			require: true,
+			required: true,
+		},
+		cf_password: {
+			type: String,
+			required: true,
 		},
 		admin: {
 			type: Boolean,

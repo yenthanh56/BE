@@ -7,7 +7,7 @@ const passport = require("passport");
 const cookieSession = require("cookie-session");
 const bodyParser = require("body-parser");
 const app = express();
-
+const expressSession = require("express-session");
 const authRouter = require("./src/Router/auth");
 const userRouter = require("./src/Router/user");
 const dealRouter = require("./src/Router/deal");
@@ -42,25 +42,10 @@ app.use(
 );
 app.use(bodyParser.json());
 
-// app.use(
-// 	session({
-// 		resave: false,
-// 		saveUninitialized: true,
-// 		secret: "SECRET",
-// 	})
-// );
-// app.use(function (req, res, next) {
-// 	res.header("Access-Control-Allow-Origin", "*");
-// 	res.header(
-// 		"Access-Control-Allow-Headers",
-// 		"Origin, X-Requested-With, Content-Type, Accept"
-// 	);
-// 	next();
-// });
-
 app.use(passport.initialize());
 app.use(passport.session()); //
-
+app.use(cors({ origin: true }));
+app.use(cookieParser());
 mongoose.connect(
 	process.env.MONGOOSEDB,
 
@@ -70,16 +55,6 @@ mongoose.connect(
 );
 
 app.use(express.json()); // dùng để khi tạo dữ liệu mới xác nhận
-// app.use(
-// 	cors({
-// 		origin: "http://localhost:3000",
-// 		methods: "GET,POST,PUT,DELETE",
-// 		credentials: true,
-// 	})
-// );
-
-app.use(cors({ origin: true }));
-app.use(cookieParser());
 
 app.use("/v1/userauth", userRouter);
 app.use("/v1/dealhot", dealRouter);

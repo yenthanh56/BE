@@ -1,4 +1,4 @@
-const { UserOrdered } = require("../Models/PayMentUser/PayMentUser");
+const { UserOrdered } = require("../Models/PayMentUser/PayMentUser.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const authController = {
@@ -7,21 +7,13 @@ const authController = {
 			const salt = await bcrypt.genSalt(10);
 			const { username, email, password, cf_password } = req.body;
 			const hasPass = await bcrypt.hash(password, salt);
-			if (!(username && email && password && cf_password)) {
-				res.status(400).send("All input is required");
-			}
 
-			const oldUser = await UserOrdered.findOne({ email });
-
-			if (oldUser) {
-				return res.status(409).send("User Already Exist. Please Login");
-			}
 			// create
 			const newUser = await new UserOrdered({
 				username,
 				password: hasPass,
-				email,
 				cf_password,
+				email,
 			});
 			const createNewUsers = await newUser.save();
 
@@ -57,7 +49,7 @@ const authController = {
 				// );
 				const { password, ...other } = user._doc;
 				// user.accessToken = accessToken;
-				return res.status(200).json({ other });
+				return res.status(200).json({ ...other });
 			}
 		} catch (error) {
 			return res.status(500).json(error);
