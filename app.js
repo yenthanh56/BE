@@ -49,14 +49,14 @@ app.use(bodyParser.json());
 // 		secret: "SECRET",
 // 	})
 // );
-app.use(function (req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header(
-		"Access-Control-Allow-Headers",
-		"Origin, X-Requested-With, Content-Type, Accept"
-	);
-	next();
-});
+// app.use(function (req, res, next) {
+// 	res.header("Access-Control-Allow-Origin", "*");
+// 	res.header(
+// 		"Access-Control-Allow-Headers",
+// 		"Origin, X-Requested-With, Content-Type, Accept"
+// 	);
+// 	next();
+// });
 
 app.use(passport.initialize());
 app.use(passport.session()); //
@@ -69,7 +69,7 @@ mongoose.connect(
 	}
 );
 
-app.use(express.json());
+app.use(express.json()); // dùng để khi tạo dữ liệu mới xác nhận
 // app.use(
 // 	cors({
 // 		origin: "http://localhost:3000",
