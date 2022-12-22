@@ -7,9 +7,9 @@ router.get("/login/success", (req, res) => {
 	if (req.user) {
 		res.status(200).json({
 			success: true,
-			session: true,
+
 			message: "successfull",
-			user: req.session.user,
+			user: req.user,
 			// cookies: req.cookies,
 			// cookie: { secure: true },
 		});
