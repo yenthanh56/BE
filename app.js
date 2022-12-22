@@ -11,6 +11,10 @@ const expressSession = require("express-session");
 const authRouter = require("./src/Router/auth");
 const userRouter = require("./src/Router/user");
 const dealRouter = require("./src/Router/deal");
+const passportSetup = require("./passport");
+
+// social
+const authSocialRouter = require("./src/Router/authSocial");
 
 // user order Route
 const PayMentUserRoute = require("./src/Router/PayMentUser/PayMentUser");
@@ -31,21 +35,46 @@ dotenv.config();
 app.use(
 	cookieSession({
 		name: "session",
-		keys: ["cyberwolve"],
+		keys: ["thanhngo1"],
 		maxAge: 24 * 60 * 60 * 100,
 	})
 );
-app.use(
-	bodyParser.urlencoded({
-		extended: false,
-	})
-);
-app.use(bodyParser.json());
+
+// app.use(
+// 	bodyParser.urlencoded({
+// 		extended: false,
+// 	})
+// );
+
+// app.use(bodyParser.json());
+app.use((req, res, next) => {
+	res.header("Access-Control-Allow-Credentials", true);
+	next();
+});
+// app.use(
+// 	cors({
+// 		origin: "http://localhost:3000",
+// 	})
+// );
+
+app.use(cookieParser());
 
 app.use(passport.initialize());
-app.use(passport.session()); //
-app.use(cors({ origin: true }));
-app.use(cookieParser());
+app.use(passport.session());
+// Add the line below, which you're missing:
+
+// app.use(cors({ origin: true }));
+// app.use(cookieParser());
+
+app.use(
+	cors({
+		origin: "https://tiki-app-alpha.vercel.app",
+		// origin: "http://localhost:3000",
+		methods: "GET,POST,PUT,DELETE",
+		credentials: true,
+	})
+);
+
 mongoose.connect(
 	process.env.MONGOOSEDB,
 
@@ -54,11 +83,26 @@ mongoose.connect(
 	}
 );
 
-app.use(express.json()); // dùng để khi tạo dữ liệu mới xác nhận
+// app.use(express.json()); // dùng để khi tạo dữ liệu mới xác nhận
+// const regenerate = (callback) => {
+// 	console.log("regenerating");
+// 	callback();
+// };
+// const save = (callback) => {
+// 	console.log("saving");
+// 	callback();
+// };
+// app.use((req, res, next) => {
+// 	req.session.regenerate = regenerate;
+// 	req.session.save = save;
+// 	next();
+// });
+// app.use(passport.session());
 
 app.use("/v1/userauth", userRouter);
 app.use("/v1/dealhot", dealRouter);
 app.use("/v1/auth", authRouter);
+app.use("/auth", authSocialRouter);
 
 // user Order
 app.use("/v1/userorder", PayMentUserRoute);
@@ -74,6 +118,9 @@ app.use("/v1/newproduct", newProductRoute);
 app.use("/v1/fashionnewstart", fashionNewStarRoute);
 const PORT = process.env.PORT || "3000";
 
-app.listen(PORT, () => {
-	console.log(`Example app listening on ${PORT}`);
+// app.listen(PORT, () => {
+// 	console.log(`Example app listening on ${PORT}`);
+// });
+app.listen("4000", () => {
+	console.log("Server is running!");
 });
