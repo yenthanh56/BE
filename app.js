@@ -57,8 +57,6 @@ app.use((req, res, next) => {
 // 	})
 // );
 
-app.use(cookieParser());
-
 app.use(passport.initialize());
 app.use(passport.session());
 // Add the line below, which you're missing:
@@ -118,9 +116,9 @@ app.use("/v1/newproduct", newProductRoute);
 app.use("/v1/fashionnewstart", fashionNewStarRoute);
 const PORT = process.env.PORT || "3000";
 
-app.listen(PORT, () => {
-	console.log(`Example app listening on ${PORT}`);
-});
-// app.listen("4000", () => {
-// 	console.log("Server is running!");
+// app.listen(PORT, () => {
+// 	console.log(`Example app listening on ${PORT}`);
 // });
+app.listen("4000", () => {
+	console.log("Server is running!");
+});
