@@ -118,9 +118,9 @@ app.use("/v1/newproduct", newProductRoute);
 app.use("/v1/fashionnewstart", fashionNewStarRoute);
 const PORT = process.env.PORT || "3000";
 
-// app.listen(PORT, () => {
-// 	console.log(`Example app listening on ${PORT}`);
-// });
+app.listen(PORT, () => {
+	console.log(`Example app listening on ${PORT}`);
+});
 // app.listen("4000", () => {
 // 	console.log("Server is running!");
 // });
