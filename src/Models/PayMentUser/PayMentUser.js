@@ -19,10 +19,6 @@ const UserScheme = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		cf_password: {
-			type: String,
-			required: true,
-		},
 		admin: {
 			type: Boolean,
 			default: false,
