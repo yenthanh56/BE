@@ -23,14 +23,14 @@ const userPayMentController = {
 			// } = req.body;
 
 			const newOrder = new OrderProduct(req.body);
-			const userOrdered = await newOrder.save();
+			const userOrder = await newOrder.save();
 			if (req.body.userorder) {
 				const userorder = UserOrdered.findById(req.body.userorder);
 				await userorder.updateOne({
-					$push: { orders: userOrdered._id },
+					$push: { orders: userOrder._id },
 				});
 			}
-			res.status(200).json(userOrdered);
+			res.status(200).json(userOrder);
 		} catch (error) {
 			res.status(500).json(error);
 		}
@@ -49,10 +49,10 @@ const userPayMentController = {
 	// get id user order
 	getAnUser: async (req, res) => {
 		try {
-			const userOrdered = await UserOrdered.findById(
+			const userOrder = await UserOrdered.findById(
 				req.params.id
 			).populate("orders");
-			return res.status(200).json(userOrdered);
+			return res.status(200).json(userOrder);
 		} catch (error) {
 			return res.status(500).json(error);
 		}
