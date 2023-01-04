@@ -40,38 +40,24 @@ app.use(
 	})
 );
 
-// app.use(
-// 	bodyParser.urlencoded({
-// 		extended: false,
-// 	})
-// );
-
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use((req, res, next) => {
 	res.header("Access-Control-Allow-Credentials", true);
 	next();
 });
-// app.use(
-// 	cors({
-// 		origin: "http://localhost:3000",
-// 	})
-// );
+app.use(express.json());
+app.use(
+	cors({
+		origin: "https://tiki-app-alpha.vercel.app/",
+	})
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
-// Add the line below, which you're missing:
 
-// app.use(cors({ origin: true }));
-// app.use(cookieParser());
-
-app.use(
-	cors({
-		origin: "https://tiki-app-alpha.vercel.app",
-		// origin: "http://localhost:3000",
-		methods: "GET,POST,PUT,DELETE",
-		credentials: true,
-	})
-);
+app.use(cors());
+app.use(cookieParser());
 
 mongoose.connect(
 	process.env.MONGOOSEDB,
@@ -119,6 +105,6 @@ const PORT = process.env.PORT || "3000";
 // app.listen(PORT, () => {
 // 	console.log(`Example app listening on ${PORT}`);
 // });
-app.listen("4000", () => {
+app.listen("5000", () => {
 	console.log("Server is running!");
 });
