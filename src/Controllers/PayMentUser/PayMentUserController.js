@@ -22,7 +22,7 @@ const userPayMentController = {
 			// 	userorder,
 			// } = req.body;
 
-			const newOrder = new OrderProduct(req.body);
+			const newOrder = await new OrderProduct(req.body);
 			const userOrder = await newOrder.save();
 			if (req.body.userorder) {
 				const userorder = UserOrdered.findById(req.body.userorder);
