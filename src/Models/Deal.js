@@ -7,7 +7,7 @@ const DealHotScheme = new moogose.Schema(
 			required: true,
 		},
 		image: {
-			type: [String],
+			type: String,
 		},
 		description: {
 			type: String,
