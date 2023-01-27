@@ -1,17 +1,14 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const passport = require("passport");
 const cookieSession = require("cookie-session");
 const bodyParser = require("body-parser");
 const app = express();
-const expressSession = require("express-session");
 const authRouter = require("./src/Router/auth");
 const userRouter = require("./src/Router/user");
 const dealRouter = require("./src/Router/deal");
-const passportSetup = require("./passport");
+// const passportSetup = require("./passport");
 
 // social
 const authSocialRouter = require("./src/Router/authSocial");
@@ -39,48 +36,22 @@ app.use(
 		maxAge: 24 * 60 * 60 * 100,
 	})
 );
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use((req, res, next) => {
 	res.header("Access-Control-Allow-Credentials", true);
 	next();
 });
-app.use(express.json());
+mongoose.connect(process.env.MONGOOSEDB, () => {
+	console.log("Connect Mongoose");
+});
+
 app.use(
 	cors({
-		origin: "http://localhost:3000",
+		origin: "https://localhost:3000",
 	})
 );
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.use(cookieParser());
-
-mongoose.connect(
-	process.env.MONGOOSEDB,
-
-	() => {
-		console.log("Connect Mongoose");
-	}
-);
-
-// app.use(express.json()); // dùng để khi tạo dữ liệu mới xác nhận
-// const regenerate = (callback) => {
-// 	console.log("regenerating");
-// 	callback();
-// };
-// const save = (callback) => {
-// 	console.log("saving");
-// 	callback();
-// };
-// app.use((req, res, next) => {
-// 	req.session.regenerate = regenerate;
-// 	req.session.save = save;
-// 	next();
-// });
-// app.use(passport.session());
+app.use(bodyParser.json());
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/v1/userauth", userRouter);
 app.use("/v1/dealhot", dealRouter);
