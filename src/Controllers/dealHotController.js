@@ -30,6 +30,7 @@ const dealHotController = {
 			return res.status(500).json(error);
 		}
 	},
+	// detail
 	id: async (req, res) => {
 		try {
 			// const { id } = req.query;
@@ -38,6 +39,38 @@ const dealHotController = {
 			return res.status(200).json(dealsSlug);
 		} catch (error) {
 			return res.status(500).json(error);
+		}
+	},
+	// delete
+	delete: async (req, res) => {
+		try {
+			await Deal.findByIdAndDelete(req.params.id);
+			return res.status(200).json("Delete Successfully");
+		} catch (error) {
+			return res.status(500).json(error);
+		}
+	},
+	// edit
+	edit: async (req, res) => {
+		try {
+			await Deal.findByIdAndUpdate(req.params.id, req.body, {
+				new: true,
+			});
+			return res.status(200).json("edit Successfully");
+		} catch (error) {
+			return res.status(500).json(error);
+		}
+	},
+
+	search: async (req, res) => {
+		const query = req.query.q;
+		try {
+			const deals = await Deal.find({
+				title: { $regex: query, $options: "i" },
+			}).limit(40);
+			return res.status(200).json(deals);
+		} catch (error) {
+			next(error);
 		}
 	},
 };

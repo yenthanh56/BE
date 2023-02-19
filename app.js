@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieSession = require("cookie-session");
 const bodyParser = require("body-parser");
+const passport = require("passport");
+const cookieParser = require("cookie-parser");
 const app = express();
 const authRouter = require("./src/Router/auth");
 const userRouter = require("./src/Router/user");
@@ -26,9 +28,11 @@ const cheaperRoute = require("./src/Router/Cheaper/Cheaper");
 const newProductRoute = require("./src/Router/Newproduct/Newproduct");
 const fashionNewStarRoute = require("./src/Router/Fashionnewstart/Fashionnewstart");
 
-const session = require("express-session");
 dotenv.config();
 
+mongoose.connect(process.env.MONGOOSEDB, () => {
+	console.log("Connect Mongoose");
+});
 app.use(
 	cookieSession({
 		name: "session",
@@ -40,18 +44,16 @@ app.use((req, res, next) => {
 	res.header("Access-Control-Allow-Credentials", true);
 	next();
 });
-mongoose.connect(process.env.MONGOOSEDB, () => {
-	console.log("Connect Mongoose");
-});
+
+app.use(cors());
+app.use(cookieParser());
+app.use(express.json());
 
 app.use(
 	cors({
-		origin: "https://localhost:3000",
+		origin: "http://localhost:3000",
 	})
 );
-app.use(bodyParser.json());
-app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/v1/userauth", userRouter);
 app.use("/v1/dealhot", dealRouter);
@@ -70,7 +72,7 @@ app.use("/v1/dealsale", dealSaleRoute);
 app.use("/v1/cheaper", cheaperRoute);
 app.use("/v1/newproduct", newProductRoute);
 app.use("/v1/fashionnewstart", fashionNewStarRoute);
-const PORT = process.env.PORT || "3000";
+// const PORT = process.env.PORT || "3000";
 
 // app.listen(PORT, () => {
 // 	console.log(`Example app listening on ${PORT}`);

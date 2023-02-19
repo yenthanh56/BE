@@ -5,19 +5,18 @@ const UserScheme = new mongoose.Schema(
 		username: {
 			type: String,
 			required: true,
-			minlength: 6,
-			maxlength: 20,
+			unique: true,
 		},
 		email: {
 			type: String,
 			required: true,
 			unique: true,
-			minlength: 20,
-			maxlength: 50,
+		},
+		cf_password: {
+			type: String,
 		},
 		password: {
 			type: String,
-			required: true,
 		},
 		admin: {
 			type: Boolean,
@@ -32,6 +31,10 @@ const UserScheme = new mongoose.Schema(
 			default:
 				"https://images.unsplash.com/photo-1660554042520-db71c7fea8d1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60",
 		},
+		fromGoogle: {
+			type: Boolean,
+			default: false,
+		},
 		orders: [
 			{
 				type: mongoose.Schema.Types.ObjectId,
@@ -44,50 +47,50 @@ const UserScheme = new mongoose.Schema(
 
 const OrderProductScheme = new mongoose.Schema(
 	{
-		username: { type: String, require: true },
+		username: { type: String, required: true },
 		address: {
 			type: String,
-			require: true,
+			required: true,
 			minlength: 10,
 			maxlength: 100,
 		},
 		city: {
 			type: String,
-			require: true,
+			required: true,
 			minlength: 10,
 			maxlength: 100,
 		},
 		district: {
 			type: String,
-			require: true,
+			required: true,
 		},
 		ward: {
 			type: String,
-			require: true,
+			required: true,
 		},
 		phone: {
 			type: Number,
 			minlength: 10,
 			maxlength: 10,
-			require: true,
+			required: true,
 		},
 
 		titleProduct: [String],
 		amount: [
 			{
 				type: Number,
-				require: true,
+				required: true,
 			},
 		],
 		priceItem: [String],
 		priceTotal: {
 			type: String,
-			require: true,
+			required: true,
 		},
 		image: [String],
 		paymentBy: {
 			type: String,
-			require: true,
+			required: true,
 		},
 
 		userorder: {
