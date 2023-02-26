@@ -50,7 +50,7 @@ app.use(express.json());
 
 app.use(
 	cors({
-		origin: "https://be-weld.vercel.app/",
+		origin: "https://storeapp-beta.vercel.app/",
 	})
 );
 
