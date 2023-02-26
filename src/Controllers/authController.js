@@ -17,7 +17,7 @@ const authController = {
 			});
 			const createNewUsers = await newUser.save();
 
-			return res.status(200).json(createNewUsers);
+			res.status(200).json(createNewUsers);
 		} catch (error) {
 			return res.status(500).json(error);
 		}
@@ -45,15 +45,16 @@ const authController = {
 						admin: user.admin,
 					},
 					process.env.JWT_TOKEN_NAME,
-					{ expiresIn: "30d" }
+					{ expiresIn: "1d" }
 				);
 				const { password, cf_password, ...others } = user._doc;
 				// user.accessToken = accessToken;
 				res.cookie("access_token", token, {
 					httpOnly: true,
+					SameSite: true,
 				})
 					.status(200)
-					.json(others);
+					.json({ ...others, token });
 			}
 		} catch (error) {
 			return res.status(500).json(error);

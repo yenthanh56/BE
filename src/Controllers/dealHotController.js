@@ -70,7 +70,7 @@ const dealHotController = {
 			}).limit(40);
 			return res.status(200).json(deals);
 		} catch (error) {
-			next(error);
+			return res.status(500).json(error);
 		}
 	},
 };
