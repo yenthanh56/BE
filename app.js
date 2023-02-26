@@ -50,7 +50,7 @@ app.use(express.json());
 
 app.use(
 	cors({
-		origin: "https://storeapp-beta.vercel.app/",
+		origin: "http://localhost:3000/",
 	})
 );
 
