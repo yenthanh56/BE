@@ -45,7 +45,7 @@ app.use((req, res, next) => {
 	next();
 });
 const corsOptions = {
-	origin: "http://localhost:3000",
+	origin: "https://storeapp-beta.vercel.app/",
 	credentials: true,
 	optionSuccessStatus: 200,
 };
