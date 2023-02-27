@@ -44,7 +44,7 @@ app.use(function (req, res, next) {
 	// Website you wish to allow to connect
 	res.setHeader(
 		"Access-Control-Allow-Origin",
-		"https://storeapp-beta.vercel.app/"
+		"https://be-weld.vercel.app/v1/"
 	);
 	res.setHeader("Access-Control-Allow-Credentials", "true");
 	res.setHeader("Access-Control-Max-Age", "1800");
@@ -57,17 +57,17 @@ app.use(function (req, res, next) {
 	// Pass to next layer of middleware
 	next();
 });
-// const corsOptions = {
-// 	origin: "https://storeapp-beta.vercel.app/",
-// 	credentials: true,
-// 	optionSuccessStatus: 200,
-// 	methods: ["GET", "POST", "PUT", "DELETE"],
-// };
+const corsOptions = {
+	origin: "https://storeapp-beta.vercel.app/",
+	credentials: true,
+	optionSuccessStatus: 200,
+	methods: ["GET", "POST", "PUT", "DELETE"],
+};
 
 app.use(cookieParser());
 app.use(express.json());
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use("/v1/userauth", userRouter);
 app.use("/v1/dealhot", dealRouter);
