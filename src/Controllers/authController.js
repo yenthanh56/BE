@@ -39,22 +39,21 @@ const authController = {
 			}
 			if (user && passwordValid) {
 				// error when deployment get AccessToken
-				const token = jwt.sign(
-					{
-						id: user.id,
-						admin: user.admin,
-					},
-					process.env.JWT_TOKEN_NAME,
-					{ expiresIn: "1d" }
-				);
+				// const token = jwt.sign(
+				// 	{
+				// 		id: user.id,
+				// 		admin: user.admin,
+				// 	},
+				// 	process.env.JWT_TOKEN_NAME,
+				// 	{ expiresIn: "1d" }
+				// );
 				const { password, cf_password, ...others } = user._doc;
 				user.accessToken = accessToken;
-				res.cookie("access_token", token, {
-					httpOnly: true,
-					SameSite: true,
-				})
-					.status(200)
-					.json({ ...others });
+				// res.cookie("access_token", token, {
+				// 	httpOnly: true,
+				// 	SameSite: true,
+				// })
+				res.status(200).json({ ...others });
 			}
 		} catch (error) {
 			return res.status(500).json(error);
@@ -77,33 +76,31 @@ const authController = {
 				email,
 			});
 			if (user) {
-				const token = jwt.sign(
-					{ id: user._id },
-					process.env.JWT_TOKEN_NAME,
-					{ expiresIn: "30d" }
-				);
+				// const token = jwt.sign(
+				// 	{ id: user._id },
+				// 	process.env.JWT_TOKEN_NAME,
+				// 	{ expiresIn: "30d" }
+				// );
 
-				res.cookie("access_token", token, {
-					httpOnly: true,
-				})
-					.status(200)
-					.json(user._doc);
+				// res.cookie("access_token", token, {
+				// 	httpOnly: true,
+				// })
+				res.status(200).json(user._doc);
 			} else {
 				const newUser = new UserOrdered({
 					...req.body,
 					fromGoogle: true,
 				});
 				const savedUser = await newUser.save();
-				const token = jwt.sign(
-					{ id: savedUser._id },
-					process.env.JWT_TOKEN_NAME,
-					{ expiresIn: "30d" }
-				);
-				res.cookie("access_token", token, {
-					httpOnly: true,
-				})
-					.status(200)
-					.json(savedUser._doc);
+				// const token = jwt.sign(
+				// 	{ id: savedUser._id },
+				// 	process.env.JWT_TOKEN_NAME,
+				// 	{ expiresIn: "30d" }
+				// );
+				// res.cookie("access_token", token, {
+				// 	httpOnly: true,
+				// })
+				res.status(200).json(savedUser._doc);
 			}
 		} catch (err) {
 			console.log(err);
