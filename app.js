@@ -64,7 +64,7 @@ app.use(function (req, res, next) {
 app.use(cookieParser());
 app.use(express.json());
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use("/v1/userauth", userRouter);
 app.use("/v1/dealhot", dealRouter);
