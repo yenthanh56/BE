@@ -17,7 +17,7 @@ const authController = {
 			});
 			const createNewUsers = await newUser.save();
 
-			res.status(200).json(createNewUsers);
+			return res.status(200).json(createNewUsers);
 		} catch (error) {
 			return res.status(500).json(error);
 		}
@@ -45,16 +45,17 @@ const authController = {
 						admin: user.admin,
 					},
 					process.env.JWT_TOKEN_NAME,
-					{ expiresIn: "1d" }
+					{ expiresIn: "30d" }
 				);
 				const { password, cf_password, ...others } = user._doc;
-				user.accessToken = accessToken;
-				res.cookie("access_token", token, {
-					httpOnly: true,
-					SameSite: true,
-				})
+				// user.accessToken = accessToken;
+				return res
+					.cookie("access_token", token, {
+						httpOnly: true,
+						SameSite: true,
+					})
 					.status(200)
-					.json({ ...others });
+					.json({ ...others, token });
 			}
 		} catch (error) {
 			return res.status(500).json(error);
@@ -83,10 +84,13 @@ const authController = {
 					{ expiresIn: "30d" }
 				);
 
-				res.cookie("access_token", token, {
-					httpOnly: true,
-				});
-				res.status(200).json(user._doc);
+				return res
+					.cookie("access_token", token, {
+						httpOnly: true,
+						SameSite: true,
+					})
+					.status(200)
+					.json(user._doc);
 			} else {
 				const newUser = new UserOrdered({
 					...req.body,
@@ -98,10 +102,11 @@ const authController = {
 					process.env.JWT_TOKEN_NAME,
 					{ expiresIn: "30d" }
 				);
-				res.cookie("access_token", token, {
-					httpOnly: true,
-					SameSite: true,
-				})
+				return res
+					.cookie("access_token", token, {
+						httpOnly: true,
+						SameSite: true,
+					})
 					.status(200)
 					.json(savedUser._doc);
 			}
