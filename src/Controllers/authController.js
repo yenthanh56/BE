@@ -39,22 +39,21 @@ const authController = {
 			}
 			if (user && passwordValid) {
 				// error when deployment get AccessToken
-				const token = jwt.sign(
-					{
-						id: user.id,
-						admin: user.admin,
-					},
-					process.env.JWT_TOKEN_NAME,
-					{ expiresIn: "1d" }
-				);
+				// const token = jwt.sign(
+				// 	{
+				// 		id: user.id,
+				// 		admin: user.admin,
+				// 	},
+				// 	process.env.JWT_TOKEN_NAME,
+				// 	{ expiresIn: "1d" }
+				// );
 				const { password, cf_password, ...others } = user._doc;
 				// user.accessToken = accessToken;
-				res.cookie("access_token", token, {
-					httpOnly: true,
-					SameSite: true,
-				})
-					.status(200)
-					.json({ ...others, token });
+				// res.cookie("access_token", token, {
+				// 	httpOnly: true,
+				// 	SameSite: true,
+				// })
+				res.status(200).json({ ...others });
 			}
 		} catch (error) {
 			return res.status(500).json(error);
