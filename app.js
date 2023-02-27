@@ -42,10 +42,7 @@ app.use(
 );
 app.use(function (req, res, next) {
 	// Website you wish to allow to connect
-	res.setHeader(
-		"Access-Control-Allow-Origin",
-		"https://storeapp-beta.vercel.app"
-	);
+	res.setHeader("Access-Control-Allow-Origin", "*");
 	res.setHeader("Access-Control-Allow-Credentials", "true");
 	res.setHeader("Access-Control-Max-Age", "1800");
 	res.setHeader("Access-Control-Allow-Headers", "content-type");
@@ -91,6 +88,6 @@ app.use("/v1/fashionnewstart", fashionNewStarRoute);
 // app.listen(PORT, () => {
 // 	console.log(`Example app listening on ${PORT}`);
 // });
-app.listen("5000", () => {
-	console.log("Server is running!");
-});
+// app.listen("5000", () => {
+// 	console.log("Server is running!");
+// });
