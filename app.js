@@ -40,15 +40,16 @@ app.use(
 		maxAge: 24 * 60 * 60 * 100,
 	})
 );
-app.use(function (req, res, next) {
-	//Enabling CORS
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+app.use((req, res, next) => {
 	res.header(
-		"Access-Control-Allow-Headers",
-		"Origin, X-Requested-With, Content-Type,Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+		"Access-Control-Allow-Headers, *, Access-Control-Allow-Origin",
+		"Origin, X-Requested-with, Content_Type,Accept,Authorization",
+		"https://storeapp-beta.vercel.app/"
 	);
-
+	if (req.method === "OPTIONS") {
+		res.header("Access-Control-Allow-Methods", "PUT,POST,PATCH,DELETE,GET");
+		return res.status(200).json({});
+	}
 	next();
 });
 const corsOptions = {
