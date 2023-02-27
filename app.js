@@ -44,15 +44,16 @@ app.use((req, res, next) => {
 	res.header("Access-Control-Allow-Credentials", true);
 	next();
 });
+const corsOptions = {
+	origin: "http://localhost:3000",
+	credentials: true,
+	optionSuccessStatus: 200,
+};
 
 app.use(cookieParser());
 app.use(express.json());
 
-app.use(
-	cors({
-		origin: "http://localhost:3000/",
-	})
-);
+app.use(cors(corsOptions));
 
 app.use("/v1/userauth", userRouter);
 app.use("/v1/dealhot", dealRouter);
